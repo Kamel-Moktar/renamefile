@@ -1,6 +1,7 @@
 package gui;
 
 import javax.swing.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -11,14 +12,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class RecalculeGUI extends JFrame {
+public class RecalculeGUI extends JDialog {
 
     private JPanel panel1;
     private JLabel oldNameLabel;
-    private JPanel pp;
     private JButton selectFileButton;
     private JButton applyChangButton;
-    private JLabel oL;
     private JComboBox typeCompbobox;
     private JLabel typeDoc;
     private JComboBox companyCombobox;
@@ -32,7 +31,7 @@ public class RecalculeGUI extends JFrame {
     String newFileName;
     String parent;
     String extension;
-    File oldFile;
+    File [] oldFiles;
     String type;
     String company;
     String sequenceNumber;
@@ -42,10 +41,14 @@ public class RecalculeGUI extends JFrame {
     File configFile;
 
 
-    public RecalculeGUI() {
+    public RecalculeGUI(JFrame jFrame,File[] files) {
+        super(jFrame);
+        setModal(true);
+         oldFiles=files;
         sqNumber = 1;
         builtSequenceNumber(sqNumber);
-
+         setLocation(jFrame.getLocation().x+300,jFrame.getLocation().y);
+         setSize(500,500);
         configFile = new File(userPath + "/rename-file-config");
         if (!configFile.isFile()) {
             try {
@@ -64,12 +67,7 @@ public class RecalculeGUI extends JFrame {
         }
 
         setContentPane(panel1);
-        selectFileButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                selectFiles();
-            }
-        });
+
         typeCompbobox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -113,39 +111,31 @@ public class RecalculeGUI extends JFrame {
     }
 
 
-    public void selectFiles(){
-        choix.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        int retour = choix.showOpenDialog(RecalculeGUI.this);
-        oldFile = choix.getSelectedFile();
-        if (retour == JFileChooser.APPROVE_OPTION) {
-            for (File f : oldFile.listFiles()) {
-                if (f.isDirectory()) System.out.println("Dir :" + f.getName());
-                else if (f.isFile()) System.out.println("File :" + f.getName());
-            }
-        }
 
-//        if (retour == JFileChooser.APPROVE_OPTION) {
-//            oldFileName = choix.getSelectedFile().getName();
-//            extension = extractExtension(oldFileName);
-//            parent = choix.getSelectedFile().getParent();
-//            oldNameLabel.setText(" -" + oldFileName);
-//
-//        }
-    }
+
+
 
     public void applyRenameFile() {
+       for (File f:oldFiles) {
+           if(!f.isDirectory() ){
+           extension = extractExtension(f.getName());
+           parent = f.getParent();
+//           System.out.println(f.getName());
+           File newF = new File(parent + "/" + newFileName + "." + extension);
+//           System.out.println(newF.getName());
+           if (f.renameTo(newF)) {
 
-        File newF = new File(parent + "/" + newFileName + "." + extension);
-        if (oldFile.renameTo(newF)) {
-            JOptionPane.showMessageDialog(this, "The file was successfully renamed");
-
-            sqNumber = sqNumber + 1;
-            builtSequenceNumber(sqNumber);
-            writeSequenceNumber(sqNumber);
-            initApp();
-        } else {
-            JOptionPane.showMessageDialog(this, "Unable to rename file");
-        }
+               sqNumber = sqNumber + 1;
+               builtSequenceNumber(sqNumber);
+               writeSequenceNumber(sqNumber);
+               builtName();
+           } else {
+               JOptionPane.showMessageDialog(this, "Unable to rename file");
+           }
+           }
+       }
+        this.setVisible(false);
+//        JOptionPane.showMessageDialog(this, "The file was successfully renamed");
 
     }
 
@@ -205,12 +195,6 @@ public class RecalculeGUI extends JFrame {
 
     }
 
-    public void initApp() {
-        oldFileName = "";
-        oldNameLabel.setText("");
-        newFileName = "";
-        newFileNameLabel.setText("");
-        applyChangButton.setEnabled(false);
-    }
+
 
 }

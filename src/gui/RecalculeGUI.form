@@ -7,49 +7,6 @@
     <properties/>
     <border type="none"/>
     <children>
-      <grid id="41182" binding="pp" layout-manager="BorderLayout" hgap="0" vgap="0">
-        <constraints border-constraint="North"/>
-        <properties/>
-        <border type="bevel-raised" title="Source file">
-          <font size="16" style="1"/>
-        </border>
-        <children>
-          <component id="7e6c2" class="javax.swing.JLabel" binding="oldNameLabel">
-            <constraints border-constraint="Center"/>
-            <properties>
-              <autoscrolls value="false"/>
-              <background color="-10434817"/>
-              <doubleBuffered value="false"/>
-              <enabled value="true"/>
-              <focusCycleRoot value="false"/>
-              <focusable value="true"/>
-              <font name="Consolas" size="12"/>
-              <foreground color="-1"/>
-              <horizontalAlignment value="2"/>
-              <opaque value="true"/>
-              <text value=""/>
-            </properties>
-          </component>
-          <component id="3368a" class="javax.swing.JButton" binding="selectFileButton">
-            <constraints border-constraint="East"/>
-            <properties>
-              <icon value="resources/icons/File_Explorer_23583(1).png"/>
-              <text value=""/>
-            </properties>
-          </component>
-          <component id="6da2b" class="javax.swing.JLabel" binding="oL">
-            <constraints border-constraint="West"/>
-            <properties>
-              <autoscrolls value="false"/>
-              <background color="-7484942"/>
-              <enabled value="true"/>
-              <font name="Consolas" size="12"/>
-              <foreground color="-16711422"/>
-              <text value=" Old file names :"/>
-            </properties>
-          </component>
-        </children>
-      </grid>
       <grid id="b9993" layout-manager="GridBagLayout">
         <constraints border-constraint="Center"/>
         <properties/>

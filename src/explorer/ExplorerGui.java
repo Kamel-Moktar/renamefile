@@ -42,7 +42,7 @@ public class ExplorerGui {
           JFrame f=new JFrame("File Explorer");
           f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
           FileManager fileManager = new FileManager();
-          f.setContentPane(fileManager.getGui());
+          f.setContentPane(fileManager.getGui(f));
           f.pack();
           f.setLocationByPlatform(true);
           //f.setMinimumSize(f.getSize());
